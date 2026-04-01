@@ -3,10 +3,10 @@ from flask_cors import CORS
 from flask_mail import Mail, Message
 
 # import your routes
-from routes.books import books_bp
-from routes.borrowers import borrowers_bp
-from routes.loans import loans_bp
-from routes.views import views_bp
+from backend.routes.books import books_bp
+from backend.routes.borrowers import borrowers_bp
+from backend.routes.loans import loans_bp
+from backend.routes.views import views_bp
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
