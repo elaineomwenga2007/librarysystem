@@ -10,3 +10,11 @@ MarkupSafe==2.1.5
 pyodbc==5.2.0
 Werkzeug==3.0.6
 zipp==3.20.2
+gunicorn 
+flask-mail
+Flask
+flask-cors
+pyodbc
+python-dotenv
+requests
+psycopg2-binary
