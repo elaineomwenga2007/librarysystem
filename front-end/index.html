@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <h1>UoN Chiromo Library</h1>
+  <div>
+    <button onclick="goHome()">Home</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="container" id="home">
+  <h2>Welcome to the University of Nairobi Chiromo Library</h2>
+  <p>Select your role</p>
+  <button class="primary" onclick="showLogin('borrower')">Borrower</button>
+  <button class="secondary" onclick="showLogin('librarian')">Librarian</button>
+</div>
+
+<!-- LOGIN -->
+<div class="container hidden login centered" id="loginPage">
+  <h2 id="loginTitle"></h2>
+  <p id="login">LOG IN</p>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button class="primary" onclick="login()">Login</button>
+  <p id="loginError" class="error"></p>
+  <p>Don't have an account?</p>
+  <button class="secondary" onclick="showSignup()">Sign Up</button>
+</div>
+
+<!-- SIGN UP -->
+<div class="container hidden signup centered" id="signupPage">
+  <h2>CREATE ACCOUNT</h2>
+  <input type="text" id="newUser" placeholder="Username">
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="email" id="email" placeholder="Email">
+  <select id="borrowerType">
+    <option value="">Select Borrower Type</option>
+    <option value="Student">Student</option>
+    <option value="Academic Staff">Academic Staff</option>
+    <option value="Non-Academic Staff">Non Academic Staff</option>
+  </select>
+  <input type="password" id="newPass" placeholder="New Password">
+  <input type="password" id="confirmPass" placeholder="Confirm Password">
+  <p id="signup-text">
+    Already have an account?
+    <a href="#" onclick="showLogin('borrower')">Log in</a>
+  </p>
+  <button class="primary" onclick="signup()">Create Account</button>
+  <p id="signupError" class="error"></p>
+</div>
+
+<!-- BORROWER DASHBOARD -->
+<div class="dashboard hidden" id="borrowerDashboard">
+  <aside class="sidebar">
+    <button onclick="showSection('books')">Books</button>
+    <button onclick="showSection('profile')">Profile</button>
+    <button onclick="showSection('history')">History</button>
+  </aside>
+
+  <main class="main">
+
+    <!-- BOOKS -->
+    <div id="booksSection">
+      <a href="https://www.google.com/maps/search/?api=1&query=University+of+Nairobi+Chiromo+Campus+Library" target="_blank">
+        <button>View Library Location</button>
+      </a>
+
+      <!-- EMBEDDED MAP -->
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.2918100035183!2d36.813226!3d-1.278744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1a613f9eb6d9%3A0x3e72f2f168edb14d!2sUniversity%20of%20Nairobi%20Chiromo%20Campus%20Library!5e0!3m2!1sen!2ske!4v1700872412345!5m2!1sen!2ske"
+          width="100%" height="250" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+
+      <h2>Available Books</h2>
+
+      <!-- SEARCH BAR -->
+      <input type="text" id="searchInput" placeholder="Search books..." oninput="searchBooks()">
+
+      <div id="booksList"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="profileSection" class="hidden">
+      <h2 id="welcomeText"></h2>
+
+      <div class="profile-card">
+        <img src="https://via.placeholder.com/80" class="profile" id="profilePic">
+
+        <p><strong>Name:</strong> <span id="profileName"></span></p>
+        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        <p><strong>Borrower Type:</strong> <span id="profileType"></span></p>
+        <p><strong>Username:</strong> <span id="profileUsername"></span></p>
+
+        <input type="text" id="newUsername" placeholder="Change Username">
+        <input type="file" id="newPic">
+
+        <button onclick="updateProfile()">Update</button>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="historySection" class="hidden">
+      <h2>History</h2>
+      <div id="history"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- LIBRARIAN DASHBOARD -->
+<div class="dashboard hidden" id="librarianDashboard">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <button onclick="showLibrarianSection('addBook')">Add Book</button>
+    <button onclick="showLibrarianSection('registerBorrower')">Register Borrower</button>
+    <button onclick="showLibrarianSection('addPublisher')">Add Publisher</button>
+    <button onclick="showLibrarianSection('addCatalogue')">Add Catalogue</button>
+    <button onclick="showLibrarianSection('borrow')">Borrow Book</button>
+    <button onclick="showLibrarianSection('return')">Return Book</button>
+    <button onclick="showLibrarianSection('reserve')">Make Reservation</button>
+    <button onclick="showLibrarianSection('views')">View Data</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <h2>Librarian Panel</h2>
+
+    <!-- ADD BOOK TO INVENTORY -->
+    <div id="addBookSection" class="hidden">
+      <h3>Add Book</h3>
+    
+      <input type="number" id="bookID" placeholder="Book ID">
+      <input type="text" id="bookTitle" placeholder="Book Title">
+      <input type="text" id="bookType" placeholder="Book Type">
+      <input type="text" id="author" placeholder="Author">
+      <input type="text" id="publisherID" placeholder="Publisher ID">
+      <input type="text" id="supplier" placeholder="Supplier">
+      <input type="date" id="purchaseDate">
+      <input type="number" id="copies" placeholder="Number of Copies">
+      <input type="number" id="price" placeholder="Price (Ksh)">
+    
+      <button onclick="addBook()">Add Book</button>
+    </div>
+
+    <!--REGISTER BORROWER-->
+    <div id="registerBorrowerSection" class="hidden">
+      <h3>Register Borrower</h3>
+      <input id="bID" placeholder="Borrower ID">
+      <input id="bName" placeholder="Name">
+      <input id="bType" placeholder="Type (Student/Academic Staff)">
+      <input id="bEmail" placeholder="Email">
+      <input id="bPhone" placeholder="Phone">
+      <button onclick="registerBorrower()">Register</button>
+    </div>
+
+    <!--ADD PUBLISHER DETAILS-->
+    <div id="addPublisherSection" class="hidden">
+      <h3>Add Publisher</h3>
+      <input id="pubID" placeholder="Publisher ID">
+      <input id="pubName" placeholder="Publisher Name">
+      <input id="pubAddress" placeholder="Address">
+      <input id="pubEmail" placeholder="Email">
+      <input id="pubPhone" placeholder="Phone">
+      <button onclick="addPublisher()">Add Publisher</button>
+    </div>
+
+    <!--ADD CATALOGUE DETAILS-->
+    <div id="addCatalogueSection" class="hidden">
+      <h3>Add Catalogue</h3>
+      <input id="catID" placeholder="Catalogue ID">
+      <input id="catPublisherID" placeholder="Publisher ID">
+      <input type="date" id="catDate">
+      <input id="catDesc" placeholder="Description">
+      <button onclick="addCatalogue()">Add Catalogue</button>
+    </div>
+
+    <!-- BORROW BOOK -->
+    <div id="borrowSection" class="hidden">
+      <h3>Borrow Book</h3>
+      <input type="text" id="borrowerID" placeholder="Borrower ID">
+      <input type="number" id="borrowBookID" placeholder="Book ID">
+      <input type="date" id="issueDate">
+      <button onclick="borrowBook()">Confirm Borrow</button>
+    </div>
+
+    <!-- RETURN BOOK -->
+    <div id="returnSection" class="hidden">
+      <h3>Return Book</h3>
+      <input type="number" id="loanID" placeholder="Loan ID">
+      <input type="text" id="returnBorrowerID" placeholder="Borrower ID">
+      <input type="number" id="returnBookID" placeholder="Book ID">
+      <button onclick="processReturn()">Return Book</button>
+    </div>
+
+    <!--MAKE RESERVATIONS-->
+    <div id="reserveSection" class="hidden">
+      <h3>Make Reservation</h3>
+      <input id="resBookID" placeholder="Book ID">
+      <input id="resBorrowerID" placeholder="Borrower ID">
+      <button onclick="makeReservation()">Reserve</button>
+    </div>
+
+    <!-- VIEWS -->
+    <div id="viewsSection" class="hidden">
+      <h3>Library Data</h3>
+      <button onclick="loadView('inventory')">Book Inventory</button>
+      <button onclick="loadView('publishers')">Publishers Details</button>
+      <button onclick="loadView('catalogues')">Catalogues Details</button>
+      <button onclick="loadView('reservations')">Reservations</button>
+      <button onclick="loadView('returned')">Returned Books</button>
+      <button onclick="loadView('borrowers')">Registered Borrowers</button>
+      <button onclick="loadView('overdue')">Overdue Books</button>
+      <button onclick="loadView('active')">Active Loans</button>
+      <button onclick="loadView('fines')">Fines</button>
+      <button onclick="loadView('available')">Available Books</button>
+      <button onclick="loadView('lost')">Lost Books</button>
+      <button onclick="loadView('blacklist')">Blacklist</button>
+
+      <div id="viewData"></div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <p>Contact Us: library@uonbi.ac.ke || +254 204914111</p>
+  <p>2026 University of Nairobi Chiromo Library. All Rights Reserved</p>
+</footer>
+
+<!-- BORROW MODAL -->
+<div id="borrowModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeBorrowModal()">&times;</span>
+    <h2>Borrow Book</h2>
+    <p id="borrowBookTitle"></p>
+    <label for="borrowDate">Select Date:</label>
+    <input type="date" id="borrowDate">
+    <button onclick="confirmBorrow()">Borrow Book</button>
+  </div>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
