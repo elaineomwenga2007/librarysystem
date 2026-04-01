@@ -7,7 +7,7 @@ body {
 #home {
   padding: 50px; 
   text-align: center; font-size: 18px;
-  background-image: url('/front-end/chiromolibrary.jpeg');
+  background-image: url('/frontend/chiromolibrary.jpeg');
   background-size: cover;   
   background-position: center; 
   background-repeat: no-repeat;
