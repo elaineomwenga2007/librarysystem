@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from db import get_connection
+from backend.db import get_connection
 
 views_bp = Blueprint('views', __name__)
 

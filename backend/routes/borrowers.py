@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from db import get_connection
+from backend.db import get_connection
 
 borrowers_bp = Blueprint('borrowers', __name__)
 
