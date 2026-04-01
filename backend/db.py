@@ -11,7 +11,7 @@ def get_connection(role='borrower'):
 
     conn = pyodbc.connect(
         "DRIVER={ODBC Driver 17 for SQL Server};"
-        "SERVER=10.7.60.234,1433;"
+        "SERVER=172.20.10.6,1433;"
         "DATABASE=LIBRARY_MANAGEMENT;"
         f"UID={uid};"
         f"PWD={pwd};"
